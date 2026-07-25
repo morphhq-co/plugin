@@ -1,0 +1,22 @@
+{
+  "name": "morph",
+  "version": "0.1.0",
+  "description": "Connects agents to the Morph organization brain: lifecycle hooks that pull shared guidance from brain/hooks/*.md through the Morph MCP server.",
+  "author": {
+    "name": "Morph",
+    "url": "https://github.com/morphhq-co"
+  },
+  "homepage": "https://morphhq.co",
+  "repository": "https://github.com/morphhq-co/plugin",
+  "keywords": ["morph", "brain", "knowledge", "mcp", "hooks"],
+  "hooks": "./hooks/claude-codex-hooks.json",
+  "interface": {
+    "displayName": "Morph",
+    "shortDescription": "Your organization's shared brain, in every session",
+    "longDescription": "Pulls shared organization guidance from the Morph brain (brain/hooks/*.md) at session start, per prompt, and around tool use, over the Morph MCP server.",
+    "developerName": "Morph",
+    "category": "Knowledge",
+    "capabilities": ["Lifecycle hooks", "MCP"],
+    "websiteURL": "https://morphhq.co"
+  }
+}

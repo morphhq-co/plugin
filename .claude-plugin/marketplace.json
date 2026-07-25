@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "morph",
+  "description": "Morph — the collaborative enterprise brain, wired into your agent.",
+  "owner": {
+    "name": "Morph",
+    "url": "https://github.com/morphhq-co"
+  },
+  "plugins": [
+    {
+      "name": "morph",
+      "description": "Morph MCP server plus lifecycle hooks that pull shared organization guidance from brain/hooks/*.md.",
+      "source": "./",
+      "category": "knowledge"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "_comment": "Gemini CLI extension hooks (loaded with gemini-extension.json). Gemini uses its own event names and millisecond timeouts; Claude Code and Codex load hooks/claude-codex-hooks.json instead, referenced explicitly from their plugin manifests.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${extensionPath}/hooks/morph-brain-hook.js\" session-start",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${extensionPath}/hooks/morph-brain-hook.js\" user-prompt-submit --emit BeforeAgent",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${extensionPath}/hooks/morph-brain-hook.js\" pre-tool-use --emit BeforeTool",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${extensionPath}/hooks/morph-brain-hook.js\" post-tool-use --emit AfterTool",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  }
+}

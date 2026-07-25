@@ -1,0 +1,10 @@
+{
+  "name": "morph",
+  "version": "0.1.0",
+  "description": "Connects agents to the Morph organization brain: bundles the Morph MCP server and lifecycle hooks that pull shared guidance from brain/hooks/*.md.",
+  "mcpServers": {
+    "morph": {
+      "httpUrl": "https://mcp.morphhq.co"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "_comment": "Reference template — merge into your opencode.json. OpenCode plugins cannot inject arbitrary lifecycle context yet, so the Morph brain is exposed through the MCP server only; ask the agent to read brain/hooks/session-start.md, or add it to your rules file.",
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "morph": {
+      "type": "remote",
+      "url": "https://mcp.morphhq.co"
+    }
+  }
+}

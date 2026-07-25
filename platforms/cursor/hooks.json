@@ -1,0 +1,18 @@
+{
+  "_comment": "Reference template — copy into <project>/.cursor/hooks.json or ~/.cursor/hooks.json and replace MORPH_PLUGIN_DIR with the path to your checkout of this repo. Cursor reads snake_case output (additional_context), which --format cursor emits.",
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node MORPH_PLUGIN_DIR/hooks/morph-brain-hook.js session-start --format cursor",
+        "timeout": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "node MORPH_PLUGIN_DIR/hooks/morph-brain-hook.js post-tool-use --format cursor",
+        "timeout": 10
+      }
+    ]
+  }
+}
