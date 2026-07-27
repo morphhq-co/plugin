@@ -1,0 +1,10 @@
+{
+  "_comment": "Reference template — merge into your opencode.json.",
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "morph": {
+      "type": "remote",
+      "url": "https://mcp.dev.morphhq.co"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "morph",
+  "version": "0.1.0",
+  "description": "Connects agents to Morph's organization brain, skills, directory, and governed Catalogue through MCP.",
+  "author": {
+    "name": "Morph",
+    "url": "https://github.com/morphhq-co"
+  },
+  "homepage": "https://morphhq.co",
+  "repository": "https://github.com/morphhq-co/plugin",
+  "keywords": ["morph", "brain", "knowledge", "mcp"],
+  "mcpServers": {
+    "morph": {
+      "type": "http",
+      "url": "https://mcp.dev.morphhq.co"
+    }
+  },
+  "interface": {
+    "displayName": "Morph",
+    "shortDescription": "Your organization's shared brain and software catalogue",
+    "longDescription": "Connects Codex to Morph's organization-scoped brain files, skills, people and Teams, and governed software Catalogue.",
+    "developerName": "Morph",
+    "category": "Knowledge",
+    "capabilities": ["MCP"],
+    "websiteURL": "https://morphhq.co",
+    "defaultPrompt": [
+      "Show me who I am in Morph and summarize my organization.",
+      "Find and load the Morph skill relevant to this task.",
+      "Inspect the current governed software Catalogue."
+    ]
+  }
+}

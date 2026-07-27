@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Morph brain — session start",
+  "description": "Ask Morph for shared organization guidance at session start.",
+  "version": "1",
+  "when": {
+    "type": "sessionStart"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Using the morph MCP server, call its read tool with path \"brain/hooks/session-start.md\" and follow that guidance for this session. If the file does not exist, continue silently without mentioning it."
+  }
+}

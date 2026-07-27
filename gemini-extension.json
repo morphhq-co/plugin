@@ -1,0 +1,10 @@
+{
+  "name": "morph",
+  "version": "0.1.0",
+  "description": "Connects agents to Morph's organization brain, skills, directory, and governed Catalogue through MCP.",
+  "mcpServers": {
+    "morph": {
+      "httpUrl": "https://mcp.dev.morphhq.co"
+    }
+  }
+}
