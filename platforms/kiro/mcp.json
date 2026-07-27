@@ -2,7 +2,7 @@
   "_comment": "Reference template — copy into .kiro/settings/mcp.json or ~/.kiro/settings/mcp.json.",
   "mcpServers": {
     "morph": {
-      "url": "https://mcp.morphhq.co",
+      "url": "https://mcp.dev.morphhq.co",
       "disabled": false,
       "autoApprove": ["read", "list", "find", "grep"]
     }

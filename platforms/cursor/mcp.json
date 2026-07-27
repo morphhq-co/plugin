@@ -2,7 +2,7 @@
   "_comment": "Reference template — copy into <project>/.cursor/mcp.json or ~/.cursor/mcp.json.",
   "mcpServers": {
     "morph": {
-      "url": "https://mcp.morphhq.co"
+      "url": "https://mcp.dev.morphhq.co"
     }
   }
 }

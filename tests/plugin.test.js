@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const MCP_URL = 'https://mcp.morphhq.co';
+const MCP_URL = 'https://mcp.dev.morphhq.co';
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relativePath), 'utf8'));
@@ -37,7 +37,7 @@ test('Codex marketplace installs the plugin from the repository root', () => {
   assert.ok(fs.existsSync(path.join(ROOT, plugin.source.path, '.codex-plugin', 'plugin.json')));
 });
 
-test('Claude and Gemini bundle the same production MCP endpoint', () => {
+test('Claude and Gemini bundle the same development MCP endpoint', () => {
   const claude = readJson('.claude-plugin/plugin.json');
   const sharedMcp = readJson('.mcp.json');
   const gemini = readJson('gemini-extension.json');
@@ -48,7 +48,7 @@ test('Claude and Gemini bundle the same production MCP endpoint', () => {
   assert.equal(gemini.mcpServers.morph.httpUrl, MCP_URL);
 });
 
-test('manual host templates use the production MCP endpoint', () => {
+test('manual host templates use the development MCP endpoint', () => {
   const cursor = readJson('platforms/cursor/mcp.json');
   const kiro = readJson('platforms/kiro/mcp.json');
   const openCode = readJson('platforms/opencode/opencode.json');

@@ -2,7 +2,7 @@
   "mcpServers": {
     "morph": {
       "type": "http",
-      "url": "https://mcp.morphhq.co"
+      "url": "https://mcp.dev.morphhq.co"
     }
   }
 }

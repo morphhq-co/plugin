@@ -3,7 +3,7 @@
 Connect your coding agent to your organization's shared
 [Morph](https://morphhq.co) brain.
 
-The plugin bundles the Morph MCP server at `https://mcp.morphhq.co`. Your agent
+The plugin bundles the Morph MCP server at `https://mcp.dev.morphhq.co`. Your agent
 host owns OAuth and the MCP connection; the plugin stores no credentials and
 runs no background code.
 
@@ -46,7 +46,7 @@ Add Morph to `~/.copilot/mcp-config.json`:
 {
   "mcpServers": {
     "morph": {
-      "url": "https://mcp.morphhq.co"
+      "url": "https://mcp.dev.morphhq.co"
     }
   }
 }

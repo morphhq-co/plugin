@@ -4,7 +4,7 @@
   "mcp": {
     "morph": {
       "type": "remote",
-      "url": "https://mcp.morphhq.co"
+      "url": "https://mcp.dev.morphhq.co"
     }
   }
 }

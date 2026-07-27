@@ -4,7 +4,7 @@
   "description": "Connects agents to Morph's organization brain, skills, directory, and governed Catalogue through MCP.",
   "mcpServers": {
     "morph": {
-      "httpUrl": "https://mcp.morphhq.co"
+      "httpUrl": "https://mcp.dev.morphhq.co"
     }
   }
 }
