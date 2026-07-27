@@ -2,7 +2,7 @@
   "name": "@morphhq/plugin",
   "version": "0.1.0",
   "private": true,
-  "description": "Morph agent plugin: the Morph MCP server plus lifecycle hooks that pull shared organization guidance from brain/hooks/*.md.",
+  "description": "Morph agent plugin: organization brain, skills, directory, and governed Catalogue through MCP.",
   "repository": "github:morphhq-co/plugin",
   "engines": {
     "node": ">=18"

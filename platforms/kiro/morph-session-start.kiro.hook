@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "name": "Morph brain — session start",
-  "description": "Pull shared organization guidance from the Morph brain at session start.",
+  "description": "Ask Morph for shared organization guidance at session start.",
   "version": "1",
   "when": {
     "type": "sessionStart"

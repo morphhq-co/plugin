@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "morph",
-      "description": "Morph MCP server plus lifecycle hooks that pull shared organization guidance from brain/hooks/*.md.",
+      "description": "Morph's organization brain, skills, directory, and governed Catalogue through MCP.",
       "source": "./",
       "category": "knowledge"
     }
