@@ -2,6 +2,7 @@
 
 const { test } = require('node:test');
 const assert = require('node:assert');
+const childProcess = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -16,12 +17,12 @@ test('Codex plugin bundles Morph through host-managed MCP', () => {
   const manifest = readJson('.codex-plugin/plugin.json');
 
   assert.equal(manifest.name, 'morph');
-  assert.equal(manifest.version, '0.1.0');
+  assert.equal(manifest.version, '0.1.1');
   assert.deepEqual(manifest.mcpServers, {
     morph: { type: 'http', url: MCP_URL },
   });
-  assert.equal('hooks' in manifest, false);
-  assert.deepEqual(manifest.interface.capabilities, ['MCP']);
+  assert.equal(manifest.hooks, './hooks/hooks.json');
+  assert.deepEqual(manifest.interface.capabilities, ['MCP', 'Instructions', 'Lifecycle hooks']);
   assert.ok(manifest.interface.defaultPrompt.length > 0);
 });
 
@@ -43,9 +44,17 @@ test('Claude and Gemini bundle the same development MCP endpoint', () => {
   const gemini = readJson('gemini-extension.json');
 
   assert.equal(claude.mcpServers, './.mcp.json');
-  assert.equal('hooks' in claude, false);
+  assert.equal(claude.hooks, './hooks/hooks.json');
   assert.equal(sharedMcp.mcpServers.morph.url, MCP_URL);
   assert.equal(gemini.mcpServers.morph.httpUrl, MCP_URL);
+});
+
+test('plugin distribution versions stay aligned', () => {
+  const version = readJson('package.json').version;
+
+  assert.equal(version, '0.1.1');
+  assert.equal(readJson('.codex-plugin/plugin.json').version, version);
+  assert.equal(readJson('.claude-plugin/plugin.json').version, version);
 });
 
 test('manual host templates use the development MCP endpoint', () => {
@@ -56,4 +65,73 @@ test('manual host templates use the development MCP endpoint', () => {
   assert.equal(cursor.mcpServers.morph.url, MCP_URL);
   assert.equal(kiro.mcpServers.morph.url, MCP_URL);
   assert.equal(openCode.mcp.morph.url, MCP_URL);
+});
+
+test('plugin carries Morph guidance without bundling organization skills', () => {
+  const canonical = fs.readFileSync(path.join(ROOT, 'MORPH.md'), 'utf8').trim();
+  assert.match(canonical, /load any relevant organization skill from Morph/);
+  assert.equal(fs.existsSync(path.join(ROOT, 'skills')), false);
+});
+
+test('lifecycle hooks inject guidance without adding a Stop model turn', () => {
+  const hookMap = readJson('hooks/hooks.json').hooks;
+  const script = path.join(ROOT, 'hooks', 'morph-context.js');
+  const scriptSource = fs.readFileSync(script, 'utf8');
+  const run = (event) => {
+    const result = childProcess.spawnSync(process.execPath, [script, event], {
+      encoding: 'utf8',
+    });
+    assert.equal(result.status, 0, result.stderr);
+    return result.stdout ? JSON.parse(result.stdout) : undefined;
+  };
+
+  assert.equal(hookMap.SessionStart[0].matcher, 'startup|resume|clear|compact|fork');
+  assert.ok(hookMap.SubagentStart);
+  assert.equal('Stop' in hookMap, false);
+  assert.doesNotMatch(scriptSource, /\bfetch\s*\(|https?:\/\/|mcp__/);
+  assert.doesNotMatch(scriptSource, /readFileSync\s*\(\s*0|decision:\s*['"]block/);
+
+  const session = run('SessionStart');
+  assert.match(session.hookSpecificOutput.additionalContext, /load any relevant organization skill from Morph/);
+
+  const subagent = run('SubagentStart');
+  assert.match(subagent.hookSpecificOutput.additionalContext, /return durable findings to the parent agent/);
+
+  assert.equal(run('Stop'), undefined);
+});
+
+test('hooks fail open without Node on POSIX and never wait for stdin EOF', async () => {
+  const hookMap = readJson('hooks/hooks.json').hooks;
+  const script = path.join(ROOT, 'hooks', 'morph-context.js');
+
+  if (process.platform !== 'win32') {
+    for (const entries of Object.values(hookMap)) {
+      for (const hook of entries.flatMap((entry) => entry.hooks)) {
+        const result = childProcess.spawnSync('/bin/sh', ['-c', hook.command], {
+          encoding: 'utf8',
+          env: { CLAUDE_PLUGIN_ROOT: ROOT, PATH: '/node-is-not-installed' },
+        });
+        assert.equal(result.status, 0, result.stderr);
+        assert.equal(result.stdout, '');
+        assert.match(hook.command, /command -v node/);
+        assert.match(hook.commandWindows, /Get-Command node/);
+      }
+    }
+  }
+
+  const child = childProcess.spawn(process.execPath, [script, 'SessionStart'], {
+    stdio: ['pipe', 'ignore', 'ignore'],
+  });
+  await new Promise((resolve, reject) => {
+    const guard = setTimeout(() => {
+      child.kill('SIGKILL');
+      reject(new Error('hook waited for stdin EOF'));
+    }, 3000);
+    child.on('exit', (code) => {
+      clearTimeout(guard);
+      assert.equal(code, 0);
+      resolve();
+    });
+    child.on('error', reject);
+  });
 });

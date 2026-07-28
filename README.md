@@ -3,9 +3,10 @@
 Connect your coding agent to your organization's shared
 [Morph](https://morphhq.co) brain.
 
-The plugin bundles the Morph MCP server at `https://mcp.dev.morphhq.co`. Your agent
-host owns OAuth and the MCP connection; the plugin stores no credentials and
-runs no background code.
+The plugin bundles the Morph MCP server at `https://mcp.dev.morphhq.co`. On
+Codex and Claude Code it also reminds the agent to use Morph throughout
+substantive work. Your agent host owns OAuth and the MCP connection; the plugin
+stores no credentials and runs no background code.
 
 Morph provides organization-scoped brain files, skills, people and Teams, and
 a governed software Catalogue. The MCP server tells the agent how to use these
@@ -21,6 +22,7 @@ capabilities when the connection starts.
 ```
 
 Claude Code prompts for Morph authorization when the connection is first used.
+Review and trust the bundled lifecycle hooks when prompted.
 
 ### Codex
 
@@ -30,7 +32,8 @@ codex plugin add morph@morph
 ```
 
 Start a new task after installation. Codex prompts for Morph authorization when
-the connection is first used.
+the connection is first used. Review and trust the bundled lifecycle hooks when
+prompted.
 
 ### Gemini CLI
 
@@ -70,16 +73,22 @@ its host-managed Morph connection.
 Merge [`platforms/opencode/opencode.json`](platforms/opencode/opencode.json)
 into your OpenCode configuration.
 
-## Shared session guidance
+## Agent guidance
 
-Until portable host-authenticated lifecycle hooks are available, ask the agent
-to load organization guidance through its Morph connection:
+The Codex and Claude Code hooks inject a small, organization-neutral reminder.
+The reminder tells the agent to use the host-authenticated Morph MCP;
+organization-specific workflows and skills stay in Morph.
 
-> Use the Morph `read` tool for `brain/hooks/session-start.md` and follow the
-> guidance if the file exists. Otherwise continue silently.
+Codex and Claude Code receive the reminder at session start, resume, fork,
+context compaction, and subagent start. The guidance itself covers final
+handoff without forcing another model turn on every response. At task start,
+the agent reads `brain/hooks/session-start.md` when it exists, searches for
+shared task context, and loads relevant organization skills from Morph.
 
-This keeps OAuth inside the agent host. Automatic organization guidance at
-precise lifecycle events is being designed separately.
+The hooks never authenticate, store tokens, or call Morph directly. If Morph is
+unavailable or no organization guidance exists, the agent continues silently.
+Lifecycle reminders require Node.js; when Node is unavailable, the hooks skip
+silently and the Morph MCP remains usable.
 
 ## Development
 
