@@ -79,13 +79,16 @@ The Codex and Claude Code hooks inject a small, organization-neutral reminder.
 The reminder tells the agent to use the host-authenticated Morph MCP;
 organization-specific workflows and skills stay in Morph.
 
-Codex and Claude Code receive the reminder at session start, resume, context
-compaction, subagent start, and final handoff. At task start, the agent reads
-`brain/hooks/session-start.md` when it exists, searches for shared task context,
-and loads relevant organization skills from Morph.
+Codex and Claude Code receive the reminder at session start, resume, fork,
+context compaction, and subagent start. The guidance itself covers final
+handoff without forcing another model turn on every response. At task start,
+the agent reads `brain/hooks/session-start.md` when it exists, searches for
+shared task context, and loads relevant organization skills from Morph.
 
 The hooks never authenticate, store tokens, or call Morph directly. If Morph is
 unavailable or no organization guidance exists, the agent continues silently.
+Lifecycle reminders require Node.js; when Node is unavailable, the hooks skip
+silently and the Morph MCP remains usable.
 
 ## Development
 

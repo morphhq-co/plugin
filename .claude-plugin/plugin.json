@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connects agents to Morph's organization brain, skills, directory, and governed Catalogue through MCP.",
   "author": {
     "name": "Morph",
