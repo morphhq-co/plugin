@@ -8,5 +8,6 @@
   },
   "homepage": "https://morphhq.co",
   "repository": "https://github.com/morphhq-co/plugin",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "hooks": "./hooks/hooks.json"
 }
