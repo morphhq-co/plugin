@@ -44,7 +44,10 @@ test('Claude and Gemini bundle the same development MCP endpoint', () => {
   const gemini = readJson('gemini-extension.json');
 
   assert.equal(claude.mcpServers, './.mcp.json');
-  assert.equal(claude.hooks, './hooks/hooks.json');
+  // hooks/hooks.json is auto-loaded by Claude Code; listing it in the
+  // manifest again is rejected as a duplicate and the plugin fails to load.
+  assert.equal(claude.hooks, undefined);
+  assert.ok(fs.existsSync(path.join(ROOT, 'hooks', 'hooks.json')));
   assert.equal(sharedMcp.mcpServers.morph.url, MCP_URL);
   assert.equal(gemini.mcpServers.morph.httpUrl, MCP_URL);
 });
