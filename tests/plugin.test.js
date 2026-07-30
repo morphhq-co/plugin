@@ -72,7 +72,10 @@ test('manual host templates use the development MCP endpoint', () => {
 
 test('plugin carries Morph guidance without bundling organization skills', () => {
   const canonical = fs.readFileSync(path.join(ROOT, 'MORPH.md'), 'utf8').trim();
-  assert.match(canonical, /load any relevant organization skill from Morph/);
+  assert.match(canonical, /before substantive Brain discovery or writes, call `list_skills`/);
+  assert.match(canonical, /call `load_skill` for the current organization-authored `brain-read-write` skill when available/);
+  assert.match(canonical, /live Morph package is the source of truth/);
+  assert.match(canonical, /Load any other organization skill relevant to the task/);
   assert.equal(fs.existsSync(path.join(ROOT, 'skills')), false);
 });
 
@@ -95,7 +98,10 @@ test('lifecycle hooks inject guidance without adding a Stop model turn', () => {
   assert.doesNotMatch(scriptSource, /readFileSync\s*\(\s*0|decision:\s*['"]block/);
 
   const session = run('SessionStart');
-  assert.match(session.hookSpecificOutput.additionalContext, /load any relevant organization skill from Morph/);
+  assert.match(session.hookSpecificOutput.additionalContext, /before substantive Brain discovery or writes, call `list_skills`/);
+  assert.match(session.hookSpecificOutput.additionalContext, /call `load_skill` for the current organization-authored `brain-read-write` skill when available/);
+  assert.match(session.hookSpecificOutput.additionalContext, /live Morph package is the source of truth/);
+  assert.match(session.hookSpecificOutput.additionalContext, /Load any other organization skill relevant to the task/);
 
   const subagent = run('SubagentStart');
   assert.match(subagent.hookSpecificOutput.additionalContext, /return durable findings to the parent agent/);
